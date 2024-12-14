@@ -32,7 +32,6 @@ stages:
   # Release Stage
   - stage: Release
     displayName: 'Release Stage'
-    dependsOn: Test
     jobs:
       - job: ReleaseJob
         displayName: 'Prepare for release'
