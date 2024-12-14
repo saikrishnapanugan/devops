@@ -31,7 +31,7 @@ stages:
 
   # Release Stage
   - stage: Release
-    dependsOn: Release
+    dependsOn: Build
     displayName: 'Release Stage'
     jobs:
       - job: ReleaseJob
