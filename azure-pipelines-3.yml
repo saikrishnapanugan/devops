@@ -1,8 +1,3 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-
 trigger:
 - main
 
@@ -10,17 +5,27 @@ pool:
   vmImage: ubuntu-latest
 
 jobs:
-- job: job1
-  steps:
-    - script: echo Hello, world job1!
-      displayName: 'Run a one-line script'
+  # Job 1 depends on job2
+  - job: job1
+    dependsOn: job2
+    steps:
+      - script: echo "Hello, world from job1!"
+        displayName: 'Run a one-line script in job1'
+      
+      - script: |
+          echo "Adding tasks to build, test, and deploy your project."
+          echo "See https://aka.ms/yaml for guidance."
+        displayName: 'Run a multi-line script in job1'
 
-    - script: |
-       echo Add other tasks to build, test, and deploy your project.
-       echo See https://aka.ms/yaml
-      displayName: 'Run a multi-line script'
+  # Job 2 is independent
+  - job: job2
+    steps:
+      - script: echo "Hello, world from job2!"
+        displayName: 'Run a one-line script in job2'
 
-- job: job2
-  steps:
-    - script: echo Hello, world job2!
-      displayName: 'Run a one-line script'
+  # Job 3 depends on job1
+  - job: job3
+    dependsOn: job1
+    steps:
+      - script: echo "Hello, world from job3!"
+        displayName: 'Run a one-line script in job3'
