@@ -15,3 +15,9 @@ stages:
           - bash: echo "Building the application..."
           - bash: java -version
           - bash: node --version
+          - bash : echo $(Build.ArtifactStagingDirectory)
+          - task: PublishBuildArtifacts@1
+            inputs:
+              PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+              ArtifactName: 'build'
+              publishLocation: 'Container'
