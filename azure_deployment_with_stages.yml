@@ -30,3 +30,28 @@ stages:
               SourceFolder: '$(Build.SourcesDirectory)'
               Contents: '**' # Select all files
               TargetFolder: '$(Build.ArtifactStagingDirectory)'
+              
+
+  - stage: DEVDeploy
+    jobs:
+    - deployment: DEVDeployJob
+      environment: DEV
+      #dependsOn: BuildJob
+      strategy:
+       runOnce:
+         deploy:
+           steps:
+             - script: echo "DEV DEPLOY JOB RUNNING"
+            
+
+  - stage: QADeploy
+    jobs:
+    - deployment: QADeployJob
+      environment: QA
+      #dependsOn: DEVDeployJob
+      strategy:
+       runOnce:
+         deploy:
+           steps:
+             - script: echo "QA DEPLOY JOB RUNNING"
+      
