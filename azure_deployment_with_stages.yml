@@ -22,6 +22,11 @@ stages:
           - bash: pwd
           - task: PublishBuildArtifacts@1
             inputs:
-              PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+              PathtoPublish: '$(Build.SourcesDirectory)'
               ArtifactName: 'build'
               publishLocation: 'Container'
+          - task: CopyFiles@2
+            inputs:
+              SourceFolder: '$(Build.SourcesDirectory)'
+              Contents: '**' # Select all files
+              TargetFolder: '$(Build.ArtifactStagingDirectory)'
