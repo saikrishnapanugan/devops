@@ -20,7 +20,7 @@ stages:
       displayName: Build an image
       inputs:
         containerRegistry: 'dockerconnection'
-        repository: 'azureto/dockerhub'
+        repository: 'krishdocker8688/in28min'
         command: 'buildAndPush'
         Dockerfile: '**/Dockerfile'
         tags: '$(tag)'
