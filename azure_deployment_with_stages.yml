@@ -17,7 +17,9 @@ stages:
           - bash: node --version
           - bash: touch helloworld.txt
           - bash: echo "Good Work" > $(Build.ArtifactStagingDirectory)/helloworld.txt
-          - bash : cat helloworld.txt
+          - bash: cat helloworld.txt
+          - bash: ls -lrt
+          - bash: pwd
           - task: PublishBuildArtifacts@1
             inputs:
               PathtoPublish: '$(Build.ArtifactStagingDirectory)'
