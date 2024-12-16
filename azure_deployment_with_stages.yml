@@ -15,7 +15,9 @@ stages:
           - bash: echo "Building the application..."
           - bash: java -version
           - bash: node --version
-          - bash : echo $(Build.ArtifactStagingDirectory)
+          - bash: touch helloworld.txt
+          - bash: echo "Good Work" > helloworld.txt
+          - bash : cat helloworld.txt
           - task: PublishBuildArtifacts@1
             inputs:
               PathtoPublish: '$(Build.ArtifactStagingDirectory)'
