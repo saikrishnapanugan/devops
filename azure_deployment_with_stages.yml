@@ -16,7 +16,7 @@ stages:
           - bash: java -version
           - bash: node --version
           - bash: touch helloworld.txt
-          - bash: echo "Good Work" > helloworld.txt
+          - bash: echo "Good Work" > $(Build.ArtifactStagingDirectory)/helloworld.txt
           - bash : cat helloworld.txt
           - task: PublishBuildArtifacts@1
             inputs:
