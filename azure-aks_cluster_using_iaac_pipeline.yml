@@ -20,7 +20,7 @@ steps:
   inputs:
     command: 'init'
     workingDirectory: '$(System.DefaultWorkingDirectory)/configuration/iaac/azure/kubernetes'
-    commandOptions: '-var client_id=$(client_id) -var client_secret=$(client_secret) -var ssh_public_key=$(publickey.secureFilePath)'
+   # commandOptions: '-var client_id=$(client_id) -var client_secret=$(client_secret) -var ssh_public_key=$(publickey.secureFilePath)'
     backendType: 'azurerm'
     backendServiceArm: 'Pay-As-You-Go(6d5c9574-3ca5-42d7-ac2e-7e8c5af27680)'
     backendAzureRmTenantId: '6e85c56e-e97a-4dc1-80ff-fb49430c5cf8'
@@ -34,7 +34,12 @@ steps:
     allowTelemetryCollection: true
   displayName: 'Run a one-line script'
 
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+- task: TerraformCLI@2
+  inputs:
+    command: 'apply'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/configuration/iaac/azure/kubernetes'
+    environmentServiceName: 'Pay-As-You-Go(6d5c9574-3ca5-42d7-ac2e-7e8c5af27680)'
+    providerAzureRmSubscriptionId: '6d5c9574-3ca5-42d7-ac2e-7e8c5af27680'
+    commandOptions: '-var client_id=$(client_id) -var client_secret=$(client_secret) -var ssh_public_key=$(publickey.secureFilePath)'
+   
+    
