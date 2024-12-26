@@ -1,13 +1,10 @@
-FROM node:18
+FROM maven:3.6.3-jdk-8-slim AS build
+WORKDIR /home/app
+COPY . /home/app
+RUN mvn -f /home/app/pom.xml clean package
 
-# Install build tools
-RUN apt-get update && apt-get install -y \
-    python3 \
-    build-essential \
-    && rm -rf /var/lib/apt/lists/*
-
-WORKDIR /app
-COPY package*.json ./
-#RUN npm install
-COPY . .
-CMD ["npm", "start"]
+FROM openjdk:8-jdk-alpine
+VOLUME /tmp
+EXPOSE 5000
+COPY --from=build /home/app/target/*.jar app.jar
+ENTRYPOINT [ "sh", "-c", "java $JAVA_OPTS -Djava.security.egd=file:/dev/./urandom -jar /app.jar" ]
