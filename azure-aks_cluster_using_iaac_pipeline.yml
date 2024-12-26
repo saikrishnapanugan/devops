@@ -15,7 +15,7 @@ steps:
 - task: DownloadSecureFile@1
   name: publickey
   inputs:
-    secureFile: 'id_ed25519.pub'
+    secureFile: 'id_rsa.pub'
 - task: TerraformCLI@2
   inputs:
     command: 'init'
