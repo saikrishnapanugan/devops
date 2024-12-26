@@ -1,0 +1,40 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- script: echo Hello AKS cluster using terraform!
+
+- task: DownloadSecureFile@1
+  name: publickey
+  inputs:
+    secureFile: 'id_ed25519.pub'
+- task: TerraformCLI@2
+  inputs:
+    command: 'init'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/configuration/iaac/azure/kubernetes'
+    commandOptions: '-var client_id=$(client_id) -var client_secret=$(client_secret) -var ssh_public_key=$(publickey.secureFilePath)'
+    backendType: 'azurerm'
+    backendServiceArm: 'Pay-As-You-Go(6d5c9574-3ca5-42d7-ac2e-7e8c5af27680)'
+    backendAzureRmTenantId: '6e85c56e-e97a-4dc1-80ff-fb49430c5cf8'
+    backendAzureRmSubscriptionId: '6d5c9574-3ca5-42d7-ac2e-7e8c5af27680'
+    ensureBackend: true
+    backendAzureRmResourceGroupName: 'terraform-backend-rg'
+    backendAzureRmResourceGroupLocation: 'westeurope'
+    backendAzureRmStorageAccountName: 'storageacctsaikrishna'
+    backendAzureRmContainerName: 'storageacctsaikrishnacontainer'
+    backendAzureRmKey: 'k8s-dev.tfstate'
+    allowTelemetryCollection: true
+  displayName: 'Run a one-line script'
+
+- script: |
+    echo Add other tasks to build, test, and deploy your project.
+    echo See https://aka.ms/yaml
+  displayName: 'Run a multi-line script'
