@@ -43,3 +43,11 @@ steps:
     commandOptions: '-var client_id=$(client_id) -var client_secret=$(client_secret) -var ssh_public_key=$(publickey.secureFilePath)'
    
     
+- task: TerraformCLI@2
+  inputs:
+    command: 'destroy'
+    workingDirectory: '$(System.DefaultWorkingDirectory)/configuration/iaac/azure/kubernetes'
+    environmentServiceName: 'Pay-As-You-Go(6d5c9574-3ca5-42d7-ac2e-7e8c5af27680)'
+    providerAzureRmSubscriptionId: '6d5c9574-3ca5-42d7-ac2e-7e8c5af27680'
+    commandOptions: '-var client_id=$(client_id) -var client_secret=$(client_secret) -var ssh_public_key=$(publickey.secureFilePath)'
+   
